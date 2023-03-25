@@ -7,6 +7,9 @@
 int main() {
 
 	WSADATA wsaData;
+	const char* server_ip = "127.0.0.1";
+	const int server_port = 8080;
+
 	int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
 	if (iResult != 0) {
 		std::cout << "WSAStartup failed with error: " << iResult << std::endl;
@@ -21,9 +24,9 @@ int main() {
 	}
 
 	sockaddr_in serverAddress;
-	inet_pton(AF_INET, "127.0.0.1", &serverAddress.sin_addr);
+	inet_pton(AF_INET, server_ip, &serverAddress.sin_addr);
 	serverAddress.sin_family = AF_INET;
-	serverAddress.sin_port = htons(8080);
+	serverAddress.sin_port = htons(server_port);
 
 	iResult = connect(ConnectSocket, (sockaddr*)&serverAddress, sizeof(serverAddress));
 	if (iResult == SOCKET_ERROR) {
